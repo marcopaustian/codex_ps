@@ -1,7 +1,9 @@
-import { CheckCircle2, Cloud, Github, SquareTerminal, UserRound } from "lucide-react";
+import { CheckCircle2, Cloud, Database, Github, SquareTerminal, UserRound } from "lucide-react";
 
 import { AuthPanel } from "@/components/auth/auth-panel";
 import { SignOutButton } from "@/components/auth/sign-out-button";
+import { NoteComposer } from "@/components/notes/note-composer";
+import { NotesList } from "@/components/notes/notes-list";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,6 +14,14 @@ import {
 } from "@/components/ui/card";
 import { env } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
+
+type Note = {
+  id: string;
+  title: string;
+  content: string;
+  inserted_at: string;
+  updated_at: string;
+};
 
 const checks = [
   {
@@ -25,9 +35,9 @@ const checks = [
     value: env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "Gesetzt" : "Fehlt noch",
   },
   {
-    label: "Vercel Deployment",
+    label: "Datenbanktabelle",
     ready: true,
-    value: "Projekt ist auf Vercel live",
+    value: "public.notes mit RLS ist live",
   },
   {
     label: "GitHub Repository",
@@ -37,10 +47,10 @@ const checks = [
 ];
 
 const nextSteps = [
-  "Magic Link anfordern und Login testen",
+  "Magic Link Login testen",
+  "Notiz anlegen, bearbeiten und loeschen",
   "Danach geschuetzte Routen oder Rollenmodell aufbauen",
-  "Optional: Tabellen und Policies ueber Supabase erweitern",
-  "Optional: Server Actions fuer Daten schreiben einsetzen",
+  "Optional: weitere Tabellen und Relationen ergaenzen",
 ];
 
 export default async function Home() {
@@ -48,6 +58,17 @@ export default async function Home() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  let notes: Note[] = [];
+
+  if (user) {
+    const { data } = await supabase
+      .from("notes")
+      .select("id, title, content, inserted_at, updated_at")
+      .order("inserted_at", { ascending: false });
+
+    notes = (data ?? []) as Note[];
+  }
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#f7f4ea,_#ffffff_55%)] px-6 py-10 text-zinc-950">
@@ -63,14 +84,14 @@ export default async function Home() {
                   shadcn/ui
                 </span>
                 <span className="rounded-full border border-zinc-300 bg-zinc-50 px-3 py-1">
-                  Supabase Auth
+                  Supabase CRUD
                 </span>
               </div>
               <CardTitle className="max-w-2xl text-4xl leading-tight">
-                Starter mit echter Supabase-Session statt nur Setup-Checkliste
+                Starter mit echter Supabase-Tabelle, Session und serverseitigem CRUD
               </CardTitle>
               <CardDescription className="max-w-2xl text-base text-zinc-600">
-                Die App ist deployed, mit Supabase verbunden und bereit fuer Login per Magic Link.
+                Login, Notizverwaltung und Row Level Security laufen jetzt ueber das verknuepfte Supabase-Projekt.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-3">
@@ -141,7 +162,7 @@ export default async function Home() {
                   Aktuelle Session
                 </CardTitle>
                 <CardDescription>
-                  Serverseitig aus Supabase gelesen. Damit ist die Auth-Kette von Cookie bis Server-Client aktiv.
+                  Serverseitig aus Supabase gelesen. Damit sind Auth, Cookies und RLS aktiv.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-4 text-sm text-zinc-600">
@@ -155,6 +176,10 @@ export default async function Home() {
                       <p className="font-medium text-zinc-950">User ID</p>
                       <p className="break-all">{user.id}</p>
                     </div>
+                    <div>
+                      <p className="font-medium text-zinc-950">Eigene Notizen</p>
+                      <p>{notes.length}</p>
+                    </div>
                     <SignOutButton />
                   </>
                 ) : (
@@ -163,7 +188,27 @@ export default async function Home() {
               </CardContent>
             </Card>
 
-            <AuthPanel />
+            {user ? (
+              <>
+                <NoteComposer />
+                <Card className="border-zinc-200/80 bg-white/90">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Database className="size-5" />
+                      Deine Notizen
+                    </CardTitle>
+                    <CardDescription>
+                      Serverseitig aus `public.notes` geladen. Durch RLS sind nur eigene Eintraege sichtbar.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <NotesList notes={notes} />
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              <AuthPanel />
+            )}
           </div>
         </section>
       </div>
