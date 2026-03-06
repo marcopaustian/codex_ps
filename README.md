@@ -1,7 +1,15 @@
-# Supabase Shadcn Vercel Starter
+# Baytomat Codex
 
-Starter-Projekt mit `Next.js 16`, `shadcn/ui`, `Supabase`, `Vercel` und einer
-VS-Code-Basis.
+Baytomat Codex ist eine produktionsreife Arbeitsplattform auf `Next.js 16`,
+`Supabase`, `shadcn/ui`, `Vercel` und `GitHub`.
+
+## Kernfunktionen
+
+- Magic-Link-Login mit Supabase Auth
+- Rollenmodell mit `member` und `admin`
+- Projekte, Tasks, Kommentare und Attachment-Einträge
+- Projektmitglieder und Activity-Log
+- Geschütztes Dashboard und Projekt-Detailseiten
 
 ## Lokal starten
 
@@ -11,18 +19,22 @@ copy .env.example .env.local
 npm run dev
 ```
 
-## Empfohlene Logins
+## Deployment
 
-```bash
-gh auth login
-vercel login
-npx supabase login
-```
+- GitHub: `https://github.com/marcopaustian/codex_ps`
+- Vercel: `https://supabase-shadcn-vercel-app.vercel.app`
 
-## Enthalten
+## Datenmodell
 
-- `src/lib/supabase/client.ts` fuer Browser-Zugriffe
-- `src/lib/supabase/server.ts` fuer Server Components
-- `src/lib/supabase/middleware.ts` fuer Session-Refresh
-- `.vscode/extensions.json` mit sinnvollen Empfehlungen
-- `.env.example` fuer lokale und Vercel-Umgebungsvariablen
+- `profiles`
+- `projects`
+- `project_members`
+- `tasks`
+- `task_comments`
+- `task_attachments`
+- `project_activity`
+
+## Hinweis
+
+Echte Datei-Binary-Uploads können als nächster Schritt über Supabase Storage
+ergänzt werden. Aktuell speichert Baytomat Codex Attachment-Metadaten und URLs.

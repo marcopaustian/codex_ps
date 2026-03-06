@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Supabase Shadcn Vercel Starter",
-  description: "Next.js starter with Supabase, shadcn/ui, Vercel, GitHub, and VS Code.",
+  title: "Baytomat Codex",
+  description: "Baytomat Codex ist ein produktionsreifes Team-Dashboard fuer Projekte, Tasks, Rollen, Aktivitaet und Zusammenarbeit auf Supabase.",
 };
 
 export default function RootLayout({
@@ -24,9 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>

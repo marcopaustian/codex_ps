@@ -1,5 +1,6 @@
 "use client";
 
+import { Mail, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,7 @@ export function AuthPanel() {
     setError(null);
 
     const supabase = createClient();
-    const redirectTo = `${window.location.origin}/`;
+    const redirectTo = `${window.location.origin}/dashboard`;
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
@@ -34,31 +35,35 @@ export function AuthPanel() {
       return;
     }
 
-    setMessage("Magic Link wurde versendet. Bitte E-Mail pruefen.");
+    setMessage("Magic Link wurde versendet. Nach dem Klick landest du direkt im Dashboard.");
     setEmail("");
     setIsPending(false);
   }
 
   return (
-    <Card className="border-zinc-200/80 bg-white/90">
+    <Card className="border-amber-200/60 bg-white/92 shadow-[0_20px_50px_-35px_rgba(120,70,10,0.4)]">
       <CardHeader>
-        <CardTitle>Supabase Auth</CardTitle>
+        <CardTitle className="flex items-center gap-2"><Sparkles className="size-5 text-amber-600" />Baytomat Codex Login</CardTitle>
         <CardDescription>
-          Melde dich per Magic Link an, um die Session direkt in der App zu testen.
+          Melde dich per Magic Link an und springe direkt in dein operatives Dashboard.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-          <Input
-            autoComplete="email"
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="name@example.com"
-            type="email"
-            value={email}
-            required
-          />
-          <Button disabled={isPending} type="submit">
-            {isPending ? "Sende..." : "Magic Link senden"}
+          <div className="relative">
+            <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400" />
+            <Input
+              autoComplete="email"
+              className="pl-9"
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="name@baytomat.de"
+              required
+              type="email"
+              value={email}
+            />
+          </div>
+          <Button className="rounded-full" disabled={isPending} type="submit">
+            {isPending ? "Sende Link..." : "Mit Magic Link anmelden"}
           </Button>
           {message ? <p className="text-sm text-emerald-700">{message}</p> : null}
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
