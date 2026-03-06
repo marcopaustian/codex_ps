@@ -21,7 +21,7 @@ export type Task = {
   owner_id: string;
   title: string;
   details: string;
-  status: "todo" | "in_progress" | "done";
+  status: "backlog" | "in_progress" | "review" | "done";
   priority: "low" | "medium" | "high";
   due_date: string | null;
   inserted_at: string;

@@ -11,6 +11,13 @@ type ProjectBoardProps = {
   tasks: Task[];
 };
 
+const columns = [
+  { key: "backlog", title: "Backlog", description: "Noch nicht gestartet" },
+  { key: "in_progress", title: "In Arbeit", description: "Wird aktiv bearbeitet" },
+  { key: "review", title: "Review", description: "Bereit zur Pruefung" },
+  { key: "done", title: "Erledigt", description: "Abgeschlossen" },
+] as const;
+
 function formatDate(value: string | null) {
   if (!value) return "Kein Termin";
   return new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(new Date(value));
@@ -49,44 +56,58 @@ export function ProjectBoard({ projects, tasks }: ProjectBoardProps) {
               </div>
             </CardHeader>
             <CardContent className="grid gap-4">
-              {projectTasks.length === 0 ? (
-                <p className="text-sm text-zinc-600">Fuer dieses Projekt gibt es noch keine Tasks.</p>
-              ) : (
-                projectTasks.map((task) => (
-                  <form key={task.id} action={updateTask} className="grid gap-3 rounded-2xl border border-zinc-200 p-4">
-                    <input name="id" type="hidden" value={task.id} />
-                    <input name="project_id" type="hidden" value={project.id} />
-                    <Input defaultValue={task.title} name="title" required />
-                    <textarea className="min-h-24 rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400" defaultValue={task.details} name="details" />
-                    <div className="grid gap-3 md:grid-cols-3">
-                      <select className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm" defaultValue={task.status} name="status">
-                        <option value="todo">Todo</option>
-                        <option value="in_progress">In progress</option>
-                        <option value="done">Done</option>
-                      </select>
-                      <select className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm" defaultValue={task.priority} name="priority">
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                      </select>
-                      <Input defaultValue={task.due_date ?? ""} name="due_date" type="date" />
+              {projectTasks.length === 0 ? <p className="text-sm text-zinc-600">Fuer dieses Projekt gibt es noch keine Tasks.</p> : null}
+              <div className="grid gap-4 xl:grid-cols-4">
+                {columns.map((column) => {
+                  const columnTasks = projectTasks.filter((task) => task.status === column.key);
+
+                  return (
+                    <div key={column.key} className="grid gap-3 rounded-3xl border border-zinc-200 bg-zinc-50/70 p-4">
+                      <div>
+                        <p className="text-sm font-semibold text-zinc-950">{column.title}</p>
+                        <p className="text-xs text-zinc-500">{column.description}</p>
+                      </div>
+                      {columnTasks.length === 0 ? (
+                        <div className="rounded-2xl border border-dashed border-zinc-200 bg-white/70 p-4 text-sm text-zinc-500">Keine Tasks</div>
+                      ) : (
+                        columnTasks.map((task) => (
+                          <div key={task.id} className="grid gap-3 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
+                            <form action={updateTask} className="grid gap-3">
+                              <input name="id" type="hidden" value={task.id} />
+                              <input name="project_id" type="hidden" value={project.id} />
+                              <Input defaultValue={task.title} name="title" required />
+                              <textarea className="min-h-24 rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400" defaultValue={task.details} name="details" />
+                              <div className="grid gap-3">
+                                <select className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm" defaultValue={task.status} name="status">
+                                  <option value="backlog">Backlog</option>
+                                  <option value="in_progress">In Arbeit</option>
+                                  <option value="review">Review</option>
+                                  <option value="done">Erledigt</option>
+                                </select>
+                                <select className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm" defaultValue={task.priority} name="priority">
+                                  <option value="low">Low</option>
+                                  <option value="medium">Medium</option>
+                                  <option value="high">High</option>
+                                </select>
+                                <Input defaultValue={task.due_date ?? ""} name="due_date" type="date" />
+                              </div>
+                              <div className="flex items-center justify-between gap-3 text-xs text-zinc-500">
+                                <span>Faellig: {formatDate(task.due_date)}</span>
+                                <SubmitButton pendingLabel="Speichere..." variant="outline">Speichern</SubmitButton>
+                              </div>
+                            </form>
+                            <form action={deleteTask}>
+                              <input name="id" type="hidden" value={task.id} />
+                              <input name="project_id" type="hidden" value={project.id} />
+                              <input name="title" type="hidden" value={task.title} />
+                              <SubmitButton pendingLabel="Loesche..." variant="outline">Loeschen</SubmitButton>
+                            </form>
+                          </div>
+                        ))
+                      )}
                     </div>
-                    <div className="flex items-center justify-between gap-3 text-xs text-zinc-500">
-                      <span>Faellig: {formatDate(task.due_date)}</span>
-                      <SubmitButton pendingLabel="Speichere..." variant="outline">Speichern</SubmitButton>
-                    </div>
-                  </form>
-                ))
-              )}
-              <div className="flex flex-wrap gap-2">
-                {projectTasks.map((task) => (
-                  <form key={`${task.id}-delete`} action={deleteTask}>
-                    <input name="id" type="hidden" value={task.id} />
-                    <input name="project_id" type="hidden" value={project.id} />
-                    <input name="title" type="hidden" value={task.title} />
-                    <SubmitButton pendingLabel="Loesche..." variant="outline">{task.title} loeschen</SubmitButton>
-                  </form>
-                ))}
+                  );
+                })}
               </div>
             </CardContent>
           </Card>

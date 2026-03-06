@@ -1,15 +1,16 @@
-# Baytomat Codex
+# Baytomat Flowboard
 
-Baytomat Codex ist eine produktionsreife Arbeitsplattform auf `Next.js 16`,
+Baytomat Flowboard ist eine produktionsreife Arbeitsplattform auf `Next.js 16`,
 `Supabase`, `shadcn/ui`, `Vercel` und `GitHub`.
 
 ## Kernfunktionen
 
 - Magic-Link-Login mit Supabase Auth
 - Rollenmodell mit `member` und `admin`
+- Planner-Board mit `backlog`, `in_progress`, `review` und `done`
 - Projekte, Tasks, Kommentare und Attachment-Einträge
 - Projektmitglieder und Activity-Log
-- Geschütztes Dashboard und Projekt-Detailseiten
+- Geschuetztes Dashboard und Projekt-Detailseiten
 
 ## Lokal starten
 
@@ -36,5 +37,5 @@ npm run dev
 
 ## Hinweis
 
-Echte Datei-Binary-Uploads können als nächster Schritt über Supabase Storage
-ergänzt werden. Aktuell speichert Baytomat Codex Attachment-Metadaten und URLs.
+Echte Datei-Binary-Uploads koennen als naechster Schritt ueber Supabase Storage
+ergaenzt werden. Aktuell speichert Baytomat Flowboard Attachment-Metadaten und URLs.

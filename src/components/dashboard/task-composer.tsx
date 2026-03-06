@@ -13,7 +13,7 @@ export function TaskComposer({ projects }: TaskComposerProps) {
     <Card className="border-zinc-200/80 bg-white/90">
       <CardHeader>
         <CardTitle>Task anlegen</CardTitle>
-        <CardDescription>Tasks werden einem Projekt zugeordnet und serverseitig in Supabase gespeichert.</CardDescription>
+        <CardDescription>Tasks werden einem Projekt zugeordnet und direkt in den Flowboard-Prozess einsortiert.</CardDescription>
       </CardHeader>
       <CardContent>
         <form action={createTask} className="flex flex-col gap-3">
@@ -24,12 +24,14 @@ export function TaskComposer({ projects }: TaskComposerProps) {
             ))}
           </select>
           <Input maxLength={160} name="title" placeholder="Task-Titel" required />
-          <textarea
-            className="min-h-24 rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400"
-            name="details"
-            placeholder="Details"
-          />
-          <div className="grid gap-3 md:grid-cols-2">
+          <textarea className="min-h-24 rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400" name="details" placeholder="Details" />
+          <div className="grid gap-3 md:grid-cols-3">
+            <select className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm" defaultValue="backlog" name="status">
+              <option value="backlog">Backlog</option>
+              <option value="in_progress">In Arbeit</option>
+              <option value="review">Review</option>
+              <option value="done">Erledigt</option>
+            </select>
             <select className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm" defaultValue="medium" name="priority">
               <option value="low">Low</option>
               <option value="medium">Medium</option>

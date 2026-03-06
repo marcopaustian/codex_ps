@@ -43,9 +43,9 @@ export function AuthPanel() {
   return (
     <Card className="border-amber-200/60 bg-white/92 shadow-[0_20px_50px_-35px_rgba(120,70,10,0.4)]">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2"><Sparkles className="size-5 text-amber-600" />Baytomat Codex Login</CardTitle>
+        <CardTitle className="flex items-center gap-2"><Sparkles className="size-5 text-amber-600" />Baytomat Flowboard Login</CardTitle>
         <CardDescription>
-          Melde dich per Magic Link an und springe direkt in dein operatives Dashboard.
+          Melde dich per Magic Link an und springe direkt in dein Planner-Dashboard.
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Baytomat Codex",
-  description: "Baytomat Codex ist ein produktionsreifes Team-Dashboard fuer Projekte, Tasks, Rollen, Aktivitaet und Zusammenarbeit auf Supabase.",
+  title: "Baytomat Flowboard",
+  description: "Baytomat Flowboard ist ein produktionsreifes Planner- und Team-Board fuer Projekte, Aufgaben, Rollen, Aktivitaet und Zusammenarbeit auf Supabase.",
 };
 
 export default function RootLayout({

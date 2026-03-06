@@ -25,21 +25,21 @@ export default async function Home() {
           <Card className="overflow-hidden border-amber-200/60 bg-white/88 shadow-[0_25px_80px_-35px_rgba(120,70,10,0.35)] backdrop-blur">
             <CardHeader className="gap-5">
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-amber-800/80">
-                <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1">Baytomat Codex</span>
+                <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1">Baytomat Flowboard</span>
                 <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1">Supabase Ready</span>
                 <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1">Team Workflow</span>
               </div>
               <CardTitle className="max-w-3xl text-5xl leading-[1.05] tracking-tight">
-                Baytomat Codex ist bereit fuer Projekte, Aufgaben, Teamsteuerung und operative Zusammenarbeit.
+                Baytomat Flowboard ist bereit fuer Projekte, Aufgaben, Teamsteuerung und ein echtes Planner-Board.
               </CardTitle>
               <CardDescription className="max-w-2xl text-base text-zinc-600">
-                Die Plattform kombiniert Rollenmodell, Projektboard, Kommentare, Attachments, Activity-Logs und ein geschuetztes Dashboard auf einer produktionsreifen Supabase-Basis.
+                Die Plattform kombiniert Rollenmodell, Planner-Spalten, Kommentare, Attachments, Activity-Logs und ein geschuetztes Dashboard auf einer produktionsreifen Supabase-Basis.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-3">
               {user ? (
                 <Button asChild size="lg" className="rounded-full px-6">
-                  <Link href="/dashboard"><ArrowRight className="mr-2 size-4" />Zum Baytomat-Codex-Dashboard</Link>
+                  <Link href="/dashboard"><ArrowRight className="mr-2 size-4" />Zum Flowboard-Dashboard</Link>
                 </Button>
               ) : null}
               <Button asChild size="lg" variant="outline" className="rounded-full px-6">
@@ -53,7 +53,7 @@ export default async function Home() {
               <CardHeader>
                 <CardTitle>Bereit fuer den Einsatz</CardTitle>
                 <CardDescription className="text-zinc-300">
-                  Baytomat Codex ist auf Teamarbeit, Rechte, Nachvollziehbarkeit und operative Geschwindigkeit ausgelegt.
+                  Baytomat Flowboard ist auf Teamarbeit, klare Board-Flows, Rechte und Nachvollziehbarkeit ausgelegt.
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-3 text-sm">
@@ -76,7 +76,7 @@ export default async function Home() {
                     <SignOutButton />
                   </>
                 ) : (
-                  <p>Kein aktiver Login. Melde dich per Magic Link an, um Baytomat Codex zu betreten.</p>
+                  <p>Kein aktiver Login. Melde dich per Magic Link an, um Baytomat Flowboard zu betreten.</p>
                 )}
               </CardContent>
             </Card>
@@ -86,7 +86,7 @@ export default async function Home() {
         <section className="grid gap-4 md:grid-cols-3">
           <Card className="border-amber-200/60 bg-white/88"><CardHeader><CardTitle className="flex items-center gap-2 text-xl"><BriefcaseBusiness className="size-5" /> Operations</CardTitle></CardHeader><CardContent className="text-sm text-zinc-600">Projekte, Aufgaben, Verantwortlichkeiten und Team-Mitglieder liegen in einem gemeinsamen Arbeitsraum.</CardContent></Card>
           <Card className="border-amber-200/60 bg-white/88"><CardHeader><CardTitle className="flex items-center gap-2 text-xl"><ShieldCheck className="size-5" /> Governance</CardTitle></CardHeader><CardContent className="text-sm text-zinc-600">Admins, Owner und Mitglieder arbeiten mit klaren Rollen und RLS-geschuetzten Datenpfaden.</CardContent></Card>
-          <Card className="border-amber-200/60 bg-white/88"><CardHeader><CardTitle className="flex items-center gap-2 text-xl"><Database className="size-5" /> Plattform</CardTitle></CardHeader><CardContent className="text-sm text-zinc-600">Supabase, GitHub und Vercel bilden den technischen Unterbau fuer Baytomat Codex.</CardContent></Card>
+          <Card className="border-amber-200/60 bg-white/88"><CardHeader><CardTitle className="flex items-center gap-2 text-xl"><Database className="size-5" /> Plattform</CardTitle></CardHeader><CardContent className="text-sm text-zinc-600">Supabase, GitHub und Vercel bilden den technischen Unterbau fuer Baytomat Flowboard.</CardContent></Card>
         </section>
 
         {!user ? <AuthPanel /> : null}

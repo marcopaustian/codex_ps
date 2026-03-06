@@ -39,8 +39,8 @@ export default async function DashboardPage() {
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <Card className="border-amber-200/60 bg-white/88 shadow-[0_25px_80px_-35px_rgba(120,70,10,0.35)]">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-3xl"><LayoutDashboard className="size-7 text-amber-600" />Baytomat Codex Dashboard</CardTitle>
-              <CardDescription>Steuerzentrale fuer Projekte, Team, Aktivitaet und operative Arbeit.</CardDescription>
+              <CardTitle className="flex items-center gap-2 text-3xl"><LayoutDashboard className="size-7 text-amber-600" />Baytomat Flowboard Dashboard</CardTitle>
+              <CardDescription>Steuerzentrale fuer Projekte, Team, Aktivitaet und einen klaren Planner-Workflow.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 md:grid-cols-4">
               <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-4"><p className="text-sm text-zinc-500">Rolle</p><p className="text-2xl font-semibold capitalize">{typedProfile.role}</p></div>
@@ -74,8 +74,8 @@ export default async function DashboardPage() {
           <div className="grid gap-6">
             <Card className="border-amber-200/60 bg-white/88">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-2xl"><Users className="size-6 text-amber-600" />Projektboard</CardTitle>
-                <CardDescription>Detailseiten bündeln Attachments, Kommentare, Team-Mitglieder und Aktivitaet.</CardDescription>
+                <CardTitle className="flex items-center gap-2 text-2xl"><Users className="size-6 text-amber-600" />Planner-Board</CardTitle>
+                <CardDescription>Backlog, In Arbeit, Review und Erledigt bilden den Kernfluss pro Projekt.</CardDescription>
               </CardHeader>
               <CardContent><ProjectBoard projects={typedProjects} tasks={typedTasks} /></CardContent>
             </Card>
@@ -83,7 +83,7 @@ export default async function DashboardPage() {
             <Card className="border-amber-200/60 bg-white/88">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-2xl"><Activity className="size-6 text-amber-600" />Letzte Aktivitaet</CardTitle>
-                <CardDescription>Projektübergreifender Überblick über die jüngsten Änderungen in Baytomat Codex.</CardDescription>
+                <CardDescription>Projektuebergreifender Ueberblick ueber die juengsten Aenderungen in Baytomat Flowboard.</CardDescription>
               </CardHeader>
               <CardContent><ActivityFeed items={typedActivity as ProjectActivity[]} /></CardContent>
             </Card>
