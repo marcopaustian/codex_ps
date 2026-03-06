@@ -83,6 +83,7 @@ export function ProjectBoard({ projects, tasks }: ProjectBoardProps) {
                   <form key={`${task.id}-delete`} action={deleteTask}>
                     <input name="id" type="hidden" value={task.id} />
                     <input name="project_id" type="hidden" value={project.id} />
+                    <input name="title" type="hidden" value={task.title} />
                     <SubmitButton pendingLabel="Loesche..." variant="outline">{task.title} loeschen</SubmitButton>
                   </form>
                 ))}

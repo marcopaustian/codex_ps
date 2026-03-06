@@ -28,6 +28,34 @@ export type Task = {
   updated_at: string;
 };
 
+export type ProjectMember = {
+  project_id: string;
+  user_id: string;
+  role: "member" | "manager";
+  inserted_at: string;
+  profile?: Pick<Profile, "id" | "display_name" | "email" | "role"> | null;
+};
+
+export type ProjectActivity = {
+  id: string;
+  project_id: string;
+  actor_id: string;
+  event_type: string;
+  message: string;
+  inserted_at: string;
+  actor?: Pick<Profile, "id" | "display_name" | "email" | "role"> | null;
+};
+
+export type TaskAttachment = {
+  id: string;
+  task_id: string;
+  uploader_id: string;
+  file_name: string;
+  file_url: string;
+  file_size_bytes: number;
+  inserted_at: string;
+};
+
 export type TaskComment = {
   id: string;
   task_id: string;
