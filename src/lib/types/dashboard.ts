@@ -27,3 +27,13 @@ export type Task = {
   inserted_at: string;
   updated_at: string;
 };
+
+export type TaskComment = {
+  id: string;
+  task_id: string;
+  author_id: string;
+  body: string;
+  inserted_at: string;
+  updated_at: string;
+  author?: Pick<Profile, "id" | "display_name" | "email" | "role"> | null;
+};

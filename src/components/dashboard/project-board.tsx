@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { deleteTask, updateTask } from "@/app/actions";
 import { SubmitButton } from "@/components/submit-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +13,6 @@ type ProjectBoardProps = {
 
 function formatDate(value: string | null) {
   if (!value) return "Kein Termin";
-
   return new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(new Date(value));
 }
 
@@ -35,10 +36,17 @@ export function ProjectBoard({ projects, tasks }: ProjectBoardProps) {
         return (
           <Card key={project.id} className="border-zinc-200/80 bg-white/90">
             <CardHeader>
-              <CardTitle>{project.name}</CardTitle>
-              <CardDescription>
-                Stage: {project.stage} | {project.description || "Keine Beschreibung"}
-              </CardDescription>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <CardTitle>{project.name}</CardTitle>
+                  <CardDescription>
+                    Stage: {project.stage} | {project.description || "Keine Beschreibung"}
+                  </CardDescription>
+                </div>
+                <Link className="text-sm font-medium text-zinc-700 underline-offset-4 hover:underline" href={`/dashboard/projects/${project.id}`}>
+                  Details
+                </Link>
+              </div>
             </CardHeader>
             <CardContent className="grid gap-4">
               {projectTasks.length === 0 ? (
@@ -47,12 +55,9 @@ export function ProjectBoard({ projects, tasks }: ProjectBoardProps) {
                 projectTasks.map((task) => (
                   <form key={task.id} action={updateTask} className="grid gap-3 rounded-2xl border border-zinc-200 p-4">
                     <input name="id" type="hidden" value={task.id} />
+                    <input name="project_id" type="hidden" value={project.id} />
                     <Input defaultValue={task.title} name="title" required />
-                    <textarea
-                      className="min-h-24 rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400"
-                      defaultValue={task.details}
-                      name="details"
-                    />
+                    <textarea className="min-h-24 rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-zinc-400" defaultValue={task.details} name="details" />
                     <div className="grid gap-3 md:grid-cols-3">
                       <select className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm" defaultValue={task.status} name="status">
                         <option value="todo">Todo</option>
@@ -68,9 +73,7 @@ export function ProjectBoard({ projects, tasks }: ProjectBoardProps) {
                     </div>
                     <div className="flex items-center justify-between gap-3 text-xs text-zinc-500">
                       <span>Faellig: {formatDate(task.due_date)}</span>
-                      <SubmitButton pendingLabel="Speichere..." variant="outline">
-                        Speichern
-                      </SubmitButton>
+                      <SubmitButton pendingLabel="Speichere..." variant="outline">Speichern</SubmitButton>
                     </div>
                   </form>
                 ))
@@ -79,9 +82,8 @@ export function ProjectBoard({ projects, tasks }: ProjectBoardProps) {
                 {projectTasks.map((task) => (
                   <form key={`${task.id}-delete`} action={deleteTask}>
                     <input name="id" type="hidden" value={task.id} />
-                    <SubmitButton pendingLabel="Loesche..." variant="outline">
-                      {task.title} loeschen
-                    </SubmitButton>
+                    <input name="project_id" type="hidden" value={project.id} />
+                    <SubmitButton pendingLabel="Loesche..." variant="outline">{task.title} loeschen</SubmitButton>
                   </form>
                 ))}
               </div>
